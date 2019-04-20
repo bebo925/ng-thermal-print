@@ -1,6 +1,6 @@
 import { PrintBuilder } from './PrintBuilder';
 import { PrintBuffer } from "./PrintBuffer";
-import { TextEncoder } from 'text-encoding';
+declare var TextEncoder: any;
 
 const ESC = 0x1b;
 const GS = 0x1D;

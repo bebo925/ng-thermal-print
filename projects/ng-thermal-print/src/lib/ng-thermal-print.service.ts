@@ -1,5 +1,5 @@
 import { WebPrintBuilder } from './builders/WebPrintBuilder';
-import { PrintBuilder } from 'projects/ng-thermal-print/src/lib/builders/PrintBuilder';
+import { PrintBuilder } from './builders/PrintBuilder';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PrintDriver } from './drivers/PrintDriver';
