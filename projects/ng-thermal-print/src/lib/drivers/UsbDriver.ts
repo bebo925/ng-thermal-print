@@ -48,11 +48,12 @@ export class UsbDriver extends PrintDriver {
     }
 
     public requestUsb() {
-        return navigator.usb.requestDevice({ filters: [] }).then(result => {
-            this.vendorId = result.vendorId;
-            this.productId = result.productId;
-            return result;
-        });
+        return navigator.usb.requestDevice({ filters: [] })
+            .then(result => {
+                this.vendorId = result.vendorId;
+                this.productId = result.productId;
+                return result;
+            });
     }
 
     public async write(data: Uint8Array): Promise<void> {

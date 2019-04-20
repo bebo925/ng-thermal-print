@@ -1,5 +1,4 @@
-import { EscPosPrintService } from './../../projects/ng-thermal-print/src/lib/ng-thermal-print.service';
-import { UsbDriver } from '../../projects/ng-thermal-print/src/lib/drivers';
+import { PrintService, UsbDriver } from 'ng-thermal-print';
 import { Component } from '@angular/core';
 
 @Component({
@@ -9,15 +8,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   status: boolean = false;
-  usbPrintDriver = new UsbDriver(1046, 20497);
 
-  constructor(private printService: EscPosPrintService) {
+  constructor(private printService: PrintService) {
     this.printService.isConnected.subscribe(result => {
       this.status = result;
       if (result) {
-        console.log('connected printer from app');
+        console.log('Connected to printer!!!');
       } else {
-        console.log('not connected');
+        console.log('Not connected to printer.');
       }
     });
   }

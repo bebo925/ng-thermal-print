@@ -1,4 +1,4 @@
-import { PrintBuilder } from 'projects/ng-thermal-print/src/lib/builders/PrintBuilder';
+import { PrintBuilder } from './PrintBuilder';
 import { StarWebPrintBuilder } from '../../../../../js/StarWebPrintBuilder.js';
 
 export class WebPrintBuilder extends PrintBuilder {

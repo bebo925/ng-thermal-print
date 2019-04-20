@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { EscPosPrintComponent } from './ng-thermal-print.component';
 
 @NgModule({
   imports: [
   ],
-  declarations: [EscPosPrintComponent],
-  exports: [EscPosPrintComponent]
+  declarations: [],
+  exports: []
 })
-export class EscPosPrintModule { }
+export class ThermalPrintModule { }

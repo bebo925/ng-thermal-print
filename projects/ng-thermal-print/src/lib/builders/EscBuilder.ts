@@ -1,4 +1,4 @@
-import { PrintBuilder } from 'projects/ng-thermal-print/src/lib/builders/PrintBuilder';
+import { PrintBuilder } from './PrintBuilder';
 import { PrintBuffer } from "./PrintBuffer";
 import { TextEncoder } from 'text-encoding';
 

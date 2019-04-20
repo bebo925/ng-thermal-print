@@ -8,7 +8,7 @@ import { EscBuilder } from './builders/EscBuilder';
 @Injectable({
   providedIn: 'root'
 })
-export class EscPosPrintService extends PrintBuilder {
+export class PrintService extends PrintBuilder {
   public driver: PrintDriver;
   public isConnected: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public builder: PrintBuilder;
@@ -17,7 +17,7 @@ export class EscPosPrintService extends PrintBuilder {
     super();
   }
 
-  setDriver(driver: PrintDriver): EscPosPrintService {
+  setDriver(driver: PrintDriver): PrintService {
     this.driver = driver;
 
 
@@ -34,7 +34,7 @@ export class EscPosPrintService extends PrintBuilder {
   /**
    * Initialize a new print queue
    */
-  init(): EscPosPrintService {
+  init(): PrintService {
     if (!this.isConnected.value) {
       throw "Cannot initiate the print service.  No connection detected.";
     }
@@ -55,7 +55,7 @@ export class EscPosPrintService extends PrintBuilder {
    *
    * @param cutType full|partial
    */
-  public cut(cutType: string = 'full'): EscPosPrintService {
+  public cut(cutType: string = 'full'): PrintService {
     this.builder.cut(cutType);
     return this;
   }
@@ -64,24 +64,24 @@ export class EscPosPrintService extends PrintBuilder {
    *
    * @param lineCount How many lines to feed
    */
-  public feed(lineCount: number = 1): EscPosPrintService {
+  public feed(lineCount: number = 1): PrintService {
     this.builder.feed(lineCount);
     return this;
   }
 
-  setInverse(value: boolean = true): EscPosPrintService {
+  setInverse(value: boolean = true): PrintService {
     this.builder.setInverse(value);
     return this;
 
   }
 
-  setBold(value: boolean = true): EscPosPrintService {
+  setBold(value: boolean = true): PrintService {
     this.builder.setBold(value);
     return this;
 
   }
 
-  setUnderline(value: boolean = true): EscPosPrintService {
+  setUnderline(value: boolean = true): PrintService {
     this.builder.setUnderline(value);
     return this;
 
@@ -91,7 +91,7 @@ export class EscPosPrintService extends PrintBuilder {
    *
    * @param value left|center\right
    */
-  setJustification(value: string = 'left'): EscPosPrintService {
+  setJustification(value: string = 'left'): PrintService {
     this.builder.setJustification(value);
     return this;
   }
@@ -100,7 +100,7 @@ export class EscPosPrintService extends PrintBuilder {
    *
    * @param value normal|large
    */
-  setSize(value: string = 'normal'): EscPosPrintService {
+  setSize(value: string = 'normal'): PrintService {
     this.builder.setSize(value);
     return this;
   }
@@ -109,7 +109,7 @@ export class EscPosPrintService extends PrintBuilder {
    *
    * @param text
    */
-  writeLine(text: string = ''): EscPosPrintService {
+  writeLine(text: string = ''): PrintService {
     this.builder.writeLine(text);
     return this;
   }

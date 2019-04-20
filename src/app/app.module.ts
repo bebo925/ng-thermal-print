@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { EscPosPrintModule } from 'ng-thermal-print';
+import { ThermalPrintModule } from 'ng-thermal-print';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    EscPosPrintModule
+    ThermalPrintModule
   ],
   providers: [],
   bootstrap: [AppComponent]
