@@ -18,7 +18,6 @@ export class UsbDriver extends PrintDriver {
     }
 
     public connect() {
-
         navigator.usb.getDevices().then(devices => {
             this.device = devices.find((device: any) => {
                 return device.vendorId === this.vendorId && device.productId === this.productId;

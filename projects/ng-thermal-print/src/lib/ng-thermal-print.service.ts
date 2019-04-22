@@ -1,3 +1,6 @@
+import { StarPrintBuilder } from './builders/StarPrintBuilder';
+import { WebPrintDriver } from './drivers/WebPrintDriver';
+import { UsbDriver } from './drivers/UsbDriver';
 import { WebPrintBuilder } from './builders/WebPrintBuilder';
 import { PrintBuilder } from './builders/PrintBuilder';
 import { Injectable } from '@angular/core';
@@ -17,16 +20,13 @@ export class PrintService extends PrintBuilder {
     super();
   }
 
-  setDriver(driver: PrintDriver): PrintService {
+  setDriver(driver: UsbDriver | WebPrintDriver): PrintService {
     this.driver = driver;
-
-
     this.driver.connect();
 
     this.driver.isConnected.subscribe(result => {
       this.isConnected.next(result);
     });
-
 
     return this;
   }
@@ -44,9 +44,14 @@ export class PrintService extends PrintBuilder {
         this.builder = new WebPrintBuilder();
         break;
       case 'UsbDriver':
-        this.builder = new EscBuilder();
+        if (this.driver.isStarPrinter) {
+          this.builder = new StarPrintBuilder();
+        } else {
+          this.builder = new EscBuilder();
+        }
         break;
     }
+
     this.builder.init();
     return this;
   }

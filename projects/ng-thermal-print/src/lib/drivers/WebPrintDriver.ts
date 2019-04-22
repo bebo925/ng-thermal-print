@@ -6,6 +6,8 @@ export class WebPrintDriver extends PrintDriver {
     public isConnected: BehaviorSubject<boolean>;
     private trader: any;
     private url: string;
+    public isStarPrinter: boolean = false;
+
 
     constructor(url: string) {
         super();

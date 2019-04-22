@@ -42,7 +42,6 @@ Import the module into your app:
 
 ### WebUSB API
 
-
     import { PrintService, UsbDriver } from 'ng-thermal-print';
     import { Component } from '@angular/core';
 
@@ -68,6 +67,46 @@ Import the module into your app:
             usbPrintDriver.requestUsb().then(result => {
                 this.printService.setDriver(usbPrintDriver);
             });
+        }
+
+        writeToUsb() {
+            this.printService.init()
+                .setBold(true)
+                .writeLine('Hello World!')
+                .setBold(false)
+                .feed(4)
+                .cut('full')
+                .flush();
+        }
+    }
+
+
+### WebPRNT
+
+    import { PrintService, WebPrintDriver } from 'ng-thermal-print';
+    import { Component } from '@angular/core';
+
+    @Component({
+        selector: 'app-root',
+        templateUrl: './app.component.html',
+        styleUrls: ['./app.component.css']
+    })
+    export class AppComponent {
+        constructor(private printService: PrintService) {
+            this.printService.isConnected.subscribe(result => {
+                if (result) {
+                    console.log('Connected to printer!');
+                } else {
+                    console.log('Not Connected!');
+                }
+            });
+
+            /*
+                You must vist the printers configuration to generate a cert to download and
+                give trust permissions for you computer
+            */
+            let webPrintDriver = new WebPrintDriver("ip_of_printer");
+            this.printService.setDriver(webPrintDriver);
         }
 
         writeToUsb() {
