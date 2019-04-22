@@ -3,8 +3,8 @@ import { PrintDriver } from "./PrintDriver";
 declare var navigator: any;
 
 export class UsbDriver extends PrintDriver {
-    private device: any;
-    private endPoint: any;
+    private device: USBDevice;
+    private endPoint: USBEndpoint;
     private vendorId: number;
     private productId: number;
     public isStarPrinter: boolean = false;
@@ -19,11 +19,11 @@ export class UsbDriver extends PrintDriver {
 
     public connect() {
         navigator.usb.getDevices().then(devices => {
-            this.device = devices.find((device: any) => {
+            this.device = devices.find((device: USBDevice) => {
                 return device.vendorId === this.vendorId && device.productId === this.productId;
             });
 
-            if (this.device.productName.toLowerCase().includes('star micro')) {
+            if (this.device.manufacturerName.toLowerCase().includes('star micro')) {
                 this.isStarPrinter = true;
             }
             console.log(this.device);
@@ -34,11 +34,10 @@ export class UsbDriver extends PrintDriver {
                 return result;
             })
             .then(() => {
-
                 let result = this.device.claimInterface(0);
                 return result;
             }).then(result => {
-                const endPoints = this.device.configuration.interfaces[0].alternate.endpoints;
+                const endPoints: USBEndpoint[] = this.device.configuration.interfaces[0].alternate.endpoints;
                 this.endPoint = endPoints.find((endPoint: any) => endPoint.direction === 'out');
                 this.isConnected.next(true);
                 this.listenForUsbConnections();
@@ -48,7 +47,7 @@ export class UsbDriver extends PrintDriver {
 
     public requestUsb() {
         return navigator.usb.requestDevice({ filters: [] })
-            .then(result => {
+            .then((result: USBDevice) => {
                 this.vendorId = result.vendorId;
                 this.productId = result.productId;
                 return result;
@@ -60,10 +59,10 @@ export class UsbDriver extends PrintDriver {
     }
 
     private listenForUsbConnections(): void {
-        navigator.usb.addEventListener('disconnect', device => {
+        navigator.usb.addEventListener('disconnect', () => {
             this.isConnected.next(false)
         });
-        navigator.usb.addEventListener('connect', event => {
+        navigator.usb.addEventListener('connect', () => {
             this.isConnected.next(true);
         });
     }

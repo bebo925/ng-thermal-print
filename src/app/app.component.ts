@@ -1,5 +1,6 @@
-import { PrintService, UsbDriver } from 'ng-thermal-print';
+import { PrintService, UsbDriver, WebPrintDriver } from 'ng-thermal-print';
 import { Component } from '@angular/core';
+import { PrintDriver } from 'ng-thermal-print/lib/drivers/PrintDriver';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   status: boolean = false;
+  usbPrintDriver: UsbDriver;
+  webPrintDriver: WebPrintDriver;
+  ip: string = '10.83.118.160';
 
   constructor(private printService: PrintService) {
+    this.usbPrintDriver = new UsbDriver();
+
+
     this.printService.isConnected.subscribe(result => {
       this.status = result;
       if (result) {
@@ -21,13 +28,17 @@ export class AppComponent {
   }
 
   requestUsb() {
-    let usbPrintDriver = new UsbDriver();
-    usbPrintDriver.requestUsb().then(result => {
-      this.printService.setDriver(usbPrintDriver);
+    this.usbPrintDriver.requestUsb().then(result => {
+      this.printService.setDriver(this.usbPrintDriver);
     });
   }
 
-  writeToUsb() {
+  connectToWebPrint() {
+    this.webPrintDriver = new WebPrintDriver(this.ip);
+    this.printService.setDriver(this.webPrintDriver);
+  }
+
+  print(driver: PrintDriver) {
     this.printService.init()
       .setBold(true)
       .writeLine('Hello World!')

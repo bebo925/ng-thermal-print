@@ -1,7 +1,14 @@
 <strong>Status: {{status}}</strong>
-<button (click)="requestUsb()">Request Usb</button>
+<div>
+  <input [(ngModel)]="ip" type="text" name="ip" placeholder="IP of printer with WebPRNT">
+  <button (click)="connectToWebPrint()">Connect to WebPRNT</button>
+</div>
+
+<div>
+  <button (click)="requestUsb()">Connect to USB</button>
+</div>
 
 
-<button (click)="writeToUsb()"> Write</button>
-
-<button (click)="writeToWebPrint()">Write to WebPrint</button>
+<div>
+  <button (click)="print()" [disabled]="status === false"> Print!</button>
+</div>

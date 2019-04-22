@@ -20,7 +20,7 @@ export class PrintService extends PrintBuilder {
     super();
   }
 
-  setDriver(driver: UsbDriver | WebPrintDriver): PrintService {
+  setDriver(driver: PrintDriver): PrintService {
     this.driver = driver;
     this.driver.connect();
 

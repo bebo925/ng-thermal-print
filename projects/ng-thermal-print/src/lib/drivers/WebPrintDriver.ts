@@ -3,19 +3,22 @@ import { PrintDriver } from "./PrintDriver";
 import { StarWebPrintTrader } from '../../../../../js/StarWebPrintTrader.js';
 
 export class WebPrintDriver extends PrintDriver {
-    public isConnected: BehaviorSubject<boolean>;
+    public isConnected: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     private trader: any;
     private url: string;
+    private useSecure: boolean = false;
     public isStarPrinter: boolean = false;
 
 
-    constructor(url: string) {
+    constructor(url: string, useSecure: boolean = false) {
         super();
         this.url = url;
+        this.useSecure = useSecure;
     }
 
     public connect() {
-        this.trader = new StarWebPrintTrader({ url: `http://${this.url}/StarWebPRNT/SendMessage` });
+        const useSecure = (this.useSecure) ? 's' : '';
+        this.trader = new StarWebPrintTrader({ url: `http${useSecure}://${this.url}/StarWebPRNT/SendMessage` });
 
         this.trader.onReceive = (response) => {
             this.isConnected.next(true);
