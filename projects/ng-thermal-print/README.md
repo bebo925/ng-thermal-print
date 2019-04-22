@@ -52,7 +52,7 @@ Import the module into your app:
         styleUrls: ['./app.component.css']
     })
     export class AppComponent {
-        constructor(private printService: EscPosPrintService) {
+        constructor(private printService: PrintService) {
             this.printService.isConnected.subscribe(result => {
                 if (result) {
                     console.log('Connected to printer!');
