@@ -28,8 +28,11 @@ export class AppComponent {
   }
 
   requestUsb() {
-    this.usbPrintDriver.requestUsb().then(result => {
+    this.usbPrintDriver.requestUsb().subscribe(result => {
       this.printService.setDriver(this.usbPrintDriver);
+    }, error => {
+      console.log(error);
+
     });
   }
 

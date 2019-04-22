@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { PrintDriver } from "./PrintDriver";
 declare var navigator: any;
 
@@ -45,13 +45,22 @@ export class UsbDriver extends PrintDriver {
             });
     }
 
-    public requestUsb() {
-        return navigator.usb.requestDevice({ filters: [] })
-            .then((result: USBDevice) => {
-                this.vendorId = result.vendorId;
-                this.productId = result.productId;
-                return result;
-            });
+
+    /**
+     * Request a USB device through the browser
+     * return Observable<USBDevice>
+     */
+    public requestUsb(): Observable<USBDevice> {
+        return new Observable(observer => {
+            navigator.usb.requestDevice({ filters: [] })
+                .then((result: USBDevice) => {
+                    this.vendorId = result.vendorId;
+                    this.productId = result.productId;
+                    return observer.next(result);
+                }).catch(error => {
+                    return observer.error(error);
+                });
+        });
     }
 
     public async write(data: Uint8Array): Promise<void> {

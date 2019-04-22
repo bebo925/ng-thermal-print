@@ -75,8 +75,8 @@ app.component.ts
         }
 
         requestUsb() {
-            this.usbPrintDriver.requestUsb().then(result => {
-            this.printService.setDriver(this.usbPrintDriver);
+            this.usbPrintDriver.requestUsb().subscribe(result => {
+                this.printService.setDriver(this.usbPrintDriver);
             });
         }
 
