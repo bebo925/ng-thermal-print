@@ -46,6 +46,7 @@ Import into your application
 ## Example Usage
 
 app.component.ts
+
     import { PrintService, UsbDriver, WebPrintDriver } from 'ng-thermal-print';
     import { Component } from '@angular/core';
     import { PrintDriver } from 'ng-thermal-print/lib/drivers/PrintDriver';
