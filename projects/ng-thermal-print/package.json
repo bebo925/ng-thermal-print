@@ -1,6 +1,6 @@
 {
   "name": "ng-thermal-print",
-  "version": "0.0.8",
+  "version": "0.0.81",
   "description": "An angular module to add thermal printing capabilities.",
   "keywords": ["Angular", "Library", "Thermal", "Printer"],
   "repository": {

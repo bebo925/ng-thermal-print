@@ -35,7 +35,7 @@ export class PrintService extends PrintBuilder {
    * Initialize a new print queue
    */
   init(): PrintService {
-    if (!this.isConnected.value) {
+    if (!this.driver) {
       throw "Cannot initiate the print service.  No connection detected.";
     }
 
