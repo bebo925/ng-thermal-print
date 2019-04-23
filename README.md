@@ -76,13 +76,13 @@ app.component.ts
 
         requestUsb() {
             this.usbPrintDriver.requestUsb().subscribe(result => {
-                this.printService.setDriver(this.usbPrintDriver);
+                this.printService.setDriver(this.usbPrintDriver, 'ESC/POS');
             });
         }
 
         connectToWebPrint() {
             this.webPrintDriver = new WebPrintDriver(this.ip);
-            this.printService.setDriver(this.webPrintDriver);
+            this.printService.setDriver(this.webPrintDriver, 'WebPRNT');
         }
 
         print(driver: PrintDriver) {
@@ -107,7 +107,6 @@ app.component.html
     <div>
         <button (click)="requestUsb()">Connect to USB</button>
     </div>
-
 
     <div>
         <button (click)="print()" [disabled]="status === false"> Print!</button>
