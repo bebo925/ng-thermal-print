@@ -1,6 +1,4 @@
 import { StarPrintBuilder } from './builders/StarPrintBuilder';
-import { WebPrintDriver } from './drivers/WebPrintDriver';
-import { UsbDriver } from './drivers/UsbDriver';
 import { WebPrintBuilder } from './builders/WebPrintBuilder';
 import { PrintBuilder } from './builders/PrintBuilder';
 import { Injectable } from '@angular/core';
@@ -12,6 +10,7 @@ import { EscBuilder } from './builders/EscBuilder';
   providedIn: 'root'
 })
 export class PrintService extends PrintBuilder {
+  public printLanguage: string;
   public driver: PrintDriver;
   public isConnected: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public builder: PrintBuilder;
@@ -20,8 +19,14 @@ export class PrintService extends PrintBuilder {
     super();
   }
 
-  setDriver(driver: PrintDriver): PrintService {
+  /**
+   *
+   * @param driver UsbDriver | WebPrintDriver
+   * @param printLanguage ESC/POS | StarPRNT | WebPRNT
+   */
+  setDriver(driver: PrintDriver, printLanguage: string = 'ESC/POS'): PrintService {
     this.driver = driver;
+    this.printLanguage = printLanguage;
     this.driver.connect();
 
     this.driver.isConnected.subscribe(result => {
@@ -39,16 +44,15 @@ export class PrintService extends PrintBuilder {
       throw "Cannot initiate the print service.  No connection detected.";
     }
 
-    switch (this.driver.constructor.name) {
-      case 'WebPrintDriver':
+    switch (this.printLanguage) {
+      case 'WebPRNT':
         this.builder = new WebPrintBuilder();
         break;
-      case 'UsbDriver':
-        if (this.driver.isStarPrinter) {
-          this.builder = new StarPrintBuilder();
-        } else {
-          this.builder = new EscBuilder();
-        }
+      case 'StarPRNT':
+        this.builder = new StarPrintBuilder();
+        break;
+      default:
+        this.builder = new EscBuilder();
         break;
     }
 

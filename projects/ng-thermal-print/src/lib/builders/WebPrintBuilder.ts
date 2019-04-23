@@ -1,5 +1,5 @@
 import { PrintBuilder } from './PrintBuilder';
-import { StarWebPrintBuilder } from '../../../../../js/StarWebPrintBuilder.js';
+import { StarWebPrintBuilder } from '../js/StarWebPrintBuilder.js';
 
 export class WebPrintBuilder extends PrintBuilder {
     private builder: any = new StarWebPrintBuilder();
@@ -9,7 +9,7 @@ export class WebPrintBuilder extends PrintBuilder {
         super();
     }
 
-    public init() {
+    public init(): WebPrintBuilder {
         this.request += this.builder.createInitializationElement();
         return this;
     }

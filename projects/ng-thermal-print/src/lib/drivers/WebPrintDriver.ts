@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { PrintDriver } from "./PrintDriver";
-import { StarWebPrintTrader } from '../../../../../js/StarWebPrintTrader.js';
+import { StarWebPrintTrader } from '../js/StarWebPrintTrader.js';
 
 export class WebPrintDriver extends PrintDriver {
     public isConnected: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { PrintDriver } from "./PrintDriver";
 declare var navigator: any;
 
@@ -7,8 +7,6 @@ export class UsbDriver extends PrintDriver {
     private endPoint: USBEndpoint;
     private vendorId: number;
     private productId: number;
-    public isStarPrinter: boolean = false;
-
     public isConnected: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     constructor(vendorId?: number, productId?: number) {
@@ -22,10 +20,6 @@ export class UsbDriver extends PrintDriver {
             this.device = devices.find((device: USBDevice) => {
                 return device.vendorId === this.vendorId && device.productId === this.productId;
             });
-
-            if (this.device.manufacturerName.toLowerCase().includes('star micro')) {
-                this.isStarPrinter = true;
-            }
             console.log(this.device);
             return this.device.open();
         })
@@ -42,6 +36,7 @@ export class UsbDriver extends PrintDriver {
                 this.isConnected.next(true);
                 this.listenForUsbConnections();
             }).catch(result => {
+                this.isConnected.next(false);
             });
     }
 

@@ -25,10 +25,7 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [
-              "js/StarWebPrintTrader.js",
-              "js/StarWebPrintBuilder.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
