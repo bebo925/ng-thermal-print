@@ -32,13 +32,12 @@ export class AppComponent {
       this.printService.setDriver(this.usbPrintDriver);
     }, error => {
       console.log(error);
-
     });
   }
 
   connectToWebPrint() {
     this.webPrintDriver = new WebPrintDriver(this.ip);
-    this.printService.setDriver(this.webPrintDriver);
+    this.printService.setDriver(this.webPrintDriver, 'WebPRNT');
   }
 
   print(driver: PrintDriver) {

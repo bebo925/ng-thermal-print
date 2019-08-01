@@ -43,10 +43,10 @@ export class WebPrintBuilder extends PrintBuilder {
         let fontSize;
         switch (size) {
             case 'large':
-                fontSize = 2
+                fontSize = 2;
                 break;
             default:
-                fontSize = 'normal'
+                fontSize = 1;
                 break;
         }
         this.request += this.builder.createTextElement({ width: fontSize, height: fontSize });
