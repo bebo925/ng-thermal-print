@@ -1,6 +1,7 @@
-import { PrintService, UsbDriver, WebPrintDriver } from 'ng-thermal-print';
+import { PrintService, UsbDriver, WebPrintDriver, BluetoothDriver } from 'ng-thermal-print';
 import { Component } from '@angular/core';
 import { PrintDriver } from 'ng-thermal-print/lib/drivers/PrintDriver';
+
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ export class AppComponent {
   status: boolean = false;
   usbPrintDriver: UsbDriver;
   webPrintDriver: WebPrintDriver;
+  bluetoothDriver: BluetoothDriver;
   ip: string = '10.83.118.160';
 
   constructor(private printService: PrintService) {
@@ -32,6 +34,13 @@ export class AppComponent {
       this.printService.setDriver(this.usbPrintDriver);
     }, error => {
       console.log(error);
+    });
+  }
+
+  requestBluetooth() {
+    this.bluetoothDriver = new BluetoothDriver();
+    this.bluetoothDriver.requestForBluetoothDevices().subscribe((result) => {
+      this.printService.setDriver(this.bluetoothDriver, 'ESC/POS');
     });
   }
 

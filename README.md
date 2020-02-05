@@ -9,6 +9,7 @@ A library for connecting Angular apps with thermal printers.
 
 2. WebPRNT (http)
 
+3. Web Bluetooth API (Google Chrome only and needs **chrome://flags/#enable-experimental-web-platform-features** to be enabled)
 ## Print Language Drivers
 
 1. ESC/POS
@@ -47,7 +48,7 @@ Import into your application
 
 app.component.ts
 
-    import { PrintService, UsbDriver, WebPrintDriver } from 'ng-thermal-print';
+    import { PrintService, UsbDriver, WebPrintDriver, BluetoothDriver } from 'ng-thermal-print';
     import { Component } from '@angular/core';
     import { PrintDriver } from 'ng-thermal-print/lib/drivers/PrintDriver';
 
@@ -77,6 +78,13 @@ app.component.ts
         requestUsb() {
             this.usbPrintDriver.requestUsb().subscribe(result => {
                 this.printService.setDriver(this.usbPrintDriver, 'ESC/POS');
+            });
+        }
+
+        requestBluetooth() {
+            this.bluetoothDriver = new BluetoothDriver();
+            this.bluetoothDriver.requestForBluetoothDevices().subscribe((result) => {
+                this.printService.setDriver(this.bluetoothDriver, 'ESC/POS');
             });
         }
 
