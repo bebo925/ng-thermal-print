@@ -1,52 +1,55 @@
-import { PrintService, UsbDriver, WebPrintDriver } from 'ng-thermal-print';
-import { Component } from '@angular/core';
-import { PrintDriver } from 'ng-thermal-print/lib/drivers/PrintDriver';
+import { PrintService, UsbDriver, WebPrintDriver } from "ng-thermal-print";
+import { Component } from "@angular/core";
+import { PrintDriver } from "ng-thermal-print/lib/drivers/PrintDriver";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
   status: boolean = false;
   usbPrintDriver: UsbDriver;
   webPrintDriver: WebPrintDriver;
-  ip: string = '10.83.118.160';
+  ip: string = "10.83.118.160";
 
   constructor(private printService: PrintService) {
     this.usbPrintDriver = new UsbDriver();
 
-
-    this.printService.isConnected.subscribe(result => {
+    this.printService.isConnected.subscribe((result) => {
       this.status = result;
       if (result) {
-        console.log('Connected to printer!!!');
+        console.log("Connected to printer!!!");
       } else {
-        console.log('Not connected to printer.');
+        console.log("Not connected to printer.");
       }
     });
   }
 
   requestUsb() {
-    this.usbPrintDriver.requestUsb().subscribe(result => {
-      this.printService.setDriver(this.usbPrintDriver);
-    }, error => {
-      console.log(error);
-    });
+    this.usbPrintDriver.requestUsb().subscribe(
+      (result) => {
+        this.printService.setDriver(this.usbPrintDriver);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   connectToWebPrint() {
     this.webPrintDriver = new WebPrintDriver(this.ip);
-    this.printService.setDriver(this.webPrintDriver, 'WebPRNT');
+    this.printService.setDriver(this.webPrintDriver, "WebPRNT");
   }
 
-  print(driver: PrintDriver) {
-    this.printService.init()
+  print() {
+    this.printService
+      .init()
       .setBold(true)
-      .writeLine('Hello World!')
+      .writeLine("Hello World!")
       .setBold(false)
       .feed(4)
-      .cut('full')
+      .cut("full")
       .flush();
   }
 }
