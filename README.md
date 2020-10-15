@@ -23,6 +23,10 @@ Install library
 
 `npm install ng-thermal-print`
 
+NOTE: if when compiling project you get an error like this:
+`ERROR in node_modules/ng-thermal-print/lib/drivers/UsbDriver.d.ts:16:30 - error TS2304: Cannot find name 'USBDevice'. requestUsb(): Observable;`
+then add reference to w3c-web-usb by installing it with command: `npm install @types/w3c-web-usb --only=dev`
+
 Import into your application
 
     import { BrowserModule } from '@angular/platform-browser';
